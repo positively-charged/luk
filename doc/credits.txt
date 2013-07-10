@@ -1,0 +1,15 @@
+luk
+============================================================================
+
+luk was developed by Daniel "Positron" Baimiachkine, with help from Aiur850,
+Jroc, and Frank.
+ 
+
+Others Code Used
+============================================================================
+
+MD5 implementation by L. Peter Deutsch of Aladdin Enterprises.
+http://sourceforge.net/projects/libmd5-rfc/
+
+Huffman encoding and decoding implementation by Timothy Landers.
+http://sourceforge.net/projects/stonelayer/

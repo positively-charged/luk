@@ -1,0 +1,59 @@
+lukd file format
+===========================================================================
+
+Type definitions:
+   Byte == typedef unsigned char Byte; ( 1 byte )
+
+---------------------------------------------------------------------------
+
+The first four bytes of a lukd file as a whole contain the position to the 
+main table, which contains all the important information about the lukd
+file.
+
+main_table_offset             4 bytes               unsigned int
+
+---------------------------------------------------------------------------
+
+The main table contains the following fields:
+
+first_map_entry               4 bytes               unsigned int
+total_map_entries             4 bytes               unsigned int
+publish_date                  4 bytes               int
+
+The @publish_date field is a 4 byte UNIX timestamp.
+
+---------------------------------------------------------------------------
+
+The map entries correspond to the maps in the game. The map entries are 
+aligned in a series. All maps have a @name. The maximum length for a map
+name is set by the lump limit of a wad, which is 8 characters. Any names
+shorter than this limit must have their unused space filled in with NULL
+characters. The starting map entry is found at the position given by the 
+@first_map_entry field of the header. The total number of entries in the 
+lukd file is given by @total_map_entries field of the header. Each map 
+entry contains the following fields:
+
+name                          8 bytes               Byte[ 8 ]
+first_record                  4 bytes               unsigned int
+total_records                 4 bytes               unsigned int
+
+All unused space in the @name field should be filled in with NULL Bytes.
+
+---------------------------------------------------------------------------
+
+Each map entry can have a variable length of records, but the number
+of current records for a particular entry is stored in the entry's
+@total_records field. The records for each map entry are aligned
+in a connected series, like that of the map entries. The position of
+the starting record for a given map entry can be found by looking at
+the map's @first_record field. Each record consists of the 
+following fields:
+
+Record:
+   Record Header:
+      key_size                4 bytes               unsigned int
+      value_size              4 bytes               unsigned int
+
+   Record Body:
+      key                     key_size              Byte[ key_size ]
+      value                   value_size            Byte[ value_size ]
